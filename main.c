@@ -8,6 +8,7 @@ static WINDOW *field_win;
 static int field[FIELD_HEIGHT][FIELD_WIDTH];
 static int curTetro[4][4];
 static int curX, curY;
+static int enter_key = 0;
 
 void init_screen() {
     initscr();
@@ -116,7 +117,10 @@ void placePiece() {
 void userKey () {
     int ch = getch();
     switch(ch) {
-        // case KEY_ENTER: начало игры
+        case KEY_ENTER:
+        case '\n':
+            enter_key = 1;
+            break;
         // case KEY_BREAK: пауза
         // Завершение игры - ? q?
         case KEY_LEFT:
@@ -138,6 +142,14 @@ int main() {
     srand(time(NULL));
     memset(field, 0, sizeof(field));
     init_screen();
+    do {
+        clear();
+        mvprintw(10, 10, "PRESS \"ENTER\" TO PLAY THE GAME");
+        refresh();
+        userKey();
+        napms(50);
+    } while (enter_key == 0);
+    
     spawnPiece();
 
     int tick = 0;
