@@ -113,6 +113,27 @@ void placePiece() {
     }
 }
 
+void userKey () {
+    int ch = getch();
+    switch(ch) {
+        // case KEY_ENTER: начало игры
+        // case KEY_BREAK: пауза
+        // Завершение игры - ? q?
+        case KEY_LEFT:
+            if (canMove(curX-1, curY)) curX--;
+            break;
+        case KEY_RIGHT:
+            if (canMove(curX+1, curY)) curX++;
+            break;
+        case KEY_DOWN:
+            if (canMove(curX, curY+1)) curY++;
+            break;
+        // вращение фигуры - r?
+        default:
+            break;
+    }
+}
+
 int main() {
     srand(time(NULL));
     memset(field, 0, sizeof(field));
@@ -122,6 +143,7 @@ int main() {
     int tick = 0;
     int running = 1;
     while (running) {
+        userKey();
         napms(50);
         tick++;
 
